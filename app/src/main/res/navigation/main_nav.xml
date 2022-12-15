@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="uz.yusufbekibragimov.testapp.fragments.MainFragment"
+        tools:layout="@layout/main_fragment"
+        android:label="MainFragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_cardScanCameraFragment"
+            app:destination="@id/cardScanCameraFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_cardScanNfcFragment"
+            app:destination="@id/cardScanNfcFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_faceDetectionFragment"
+            app:destination="@id/faceDetectionFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_homeAnimFragment"
+            app:destination="@id/homeAnimFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_indetifyFragment"
+            app:destination="@id/indetifyFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_nfcCardReadFragment"
+            app:destination="@id/nfcCardReadFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_nfcPassportFragment"
+            app:destination="@id/nfcPassportFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cardScanCameraFragment"
+        tools:layout="@layout/card_scan_camera_fragment"
+        android:name="uz.yusufbekibragimov.testapp.fragments.CardScanCameraFragment"
+        android:label="CardScanCameraFragment" />
+    <fragment
+        android:id="@+id/cardScanNfcFragment"
+        tools:layout="@layout/card_scan_nfc_fragment"
+        android:name="uz.yusufbekibragimov.testapp.fragments.CardScanNfcFragment"
+        android:label="CardScanNfcFragment" />
+    <fragment
+        android:id="@+id/faceDetectionFragment"
+        tools:layout="@layout/face_detection_fragment"
+        android:name="uz.yusufbekibragimov.testapp.fragments.FaceDetectionFragment"
+        android:label="FaceDetectionFragment" />
+    <fragment
+        android:id="@+id/homeAnimFragment"
+        tools:layout="@layout/home_anim_fragment"
+        android:name="uz.yusufbekibragimov.testapp.fragments.HomeAnimFragment"
+        android:label="HomeAnimFragment" />
+    <fragment
+        android:id="@+id/indetifyFragment"
+        tools:layout="@layout/identify_fragment"
+        android:name="uz.yusufbekibragimov.testapp.fragments.IndetifyFragment"
+        android:label="IndetifyFragment" />
+    <fragment
+        android:id="@+id/nfcCardReadFragment"
+        tools:layout="@layout/nfc_card_read_fragment"
+        android:name="uz.yusufbekibragimov.testapp.fragments.NfcCardReadFragment"
+        android:label="NfcCardReadFragment" />
+    <fragment
+        android:id="@+id/nfcPassportFragment"
+        tools:layout="@layout/nfc_pasport_fragment"
+        android:name="uz.yusufbekibragimov.testapp.fragments.NfcPassportFragment"
+        android:label="NfcPassportFragment" />
+
+</navigation>
