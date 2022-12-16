@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import uz.yusufbekibragimov.testapp.databinding.NfcCardReadFragmentBinding
+import uz.yusufbekibragimov.testapp.databinding.PassportReadCameraFragmentBinding
 
-class NfcCardReadFragment : Fragment() {
+class PassportReadCameraFragment : Fragment() {
 
-    private var _binding: NfcCardReadFragmentBinding? = null
+    private var _binding: PassportReadCameraFragmentBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -17,7 +17,7 @@ class NfcCardReadFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = NfcCardReadFragmentBinding.inflate(layoutInflater)
+        _binding = PassportReadCameraFragmentBinding.inflate(layoutInflater)
         return binding.root
     }
 

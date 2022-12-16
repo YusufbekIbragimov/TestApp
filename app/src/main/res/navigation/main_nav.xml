@@ -26,46 +26,47 @@
             android:id="@+id/action_mainFragment_to_indetifyFragment"
             app:destination="@id/indetifyFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_nfcCardReadFragment"
-            app:destination="@id/nfcCardReadFragment" />
+            android:id="@+id/action_mainFragment_to_passportReadCameraFragment"
+            app:destination="@id/passportReadCameraFragment" />
         <action
             android:id="@+id/action_mainFragment_to_nfcPassportFragment"
             app:destination="@id/nfcPassportFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/cardScanCameraFragment"
         tools:layout="@layout/card_scan_camera_fragment"
         android:name="uz.yusufbekibragimov.testapp.fragments.CardScanCameraFragment"
-        android:label="CardScanCameraFragment" />
+        android:label="Card Scan Camera Fragment" />
     <fragment
         android:id="@+id/cardScanNfcFragment"
         tools:layout="@layout/card_scan_nfc_fragment"
         android:name="uz.yusufbekibragimov.testapp.fragments.CardScanNfcFragment"
-        android:label="CardScanNfcFragment" />
+        android:label="Card Scan Nfc Fragment" />
     <fragment
         android:id="@+id/faceDetectionFragment"
         tools:layout="@layout/face_detection_fragment"
         android:name="uz.yusufbekibragimov.testapp.fragments.FaceDetectionFragment"
-        android:label="FaceDetectionFragment" />
+        android:label="Face Detection Fragment" />
     <fragment
         android:id="@+id/homeAnimFragment"
         tools:layout="@layout/home_anim_fragment"
         android:name="uz.yusufbekibragimov.testapp.fragments.HomeAnimFragment"
-        android:label="HomeAnimFragment" />
+        android:label="Home Anim Fragment" />
     <fragment
         android:id="@+id/indetifyFragment"
         tools:layout="@layout/identify_fragment"
         android:name="uz.yusufbekibragimov.testapp.fragments.IndetifyFragment"
-        android:label="IndetifyFragment" />
+        android:label="Liveness Face Detection Fragment" />
     <fragment
-        android:id="@+id/nfcCardReadFragment"
-        tools:layout="@layout/nfc_card_read_fragment"
-        android:name="uz.yusufbekibragimov.testapp.fragments.NfcCardReadFragment"
-        android:label="NfcCardReadFragment" />
+        android:id="@+id/passportReadCameraFragment"
+        tools:layout="@layout/passport_read_camera_fragment"
+        android:name="uz.yusufbekibragimov.testapp.fragments.PassportReadCameraFragment"
+        android:label="Nfc Card Read Fragment" />
     <fragment
         android:id="@+id/nfcPassportFragment"
         tools:layout="@layout/nfc_pasport_fragment"
         android:name="uz.yusufbekibragimov.testapp.fragments.NfcPassportFragment"
-        android:label="NfcPassportFragment" />
+        android:label="Nfc Passport Fragment" />
 
 </navigation>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="100">
+        <KeyFrameSet>
+            <KeyAttribute
+                motion:motionTarget="@+id/lottieView"
+                motion:framePosition="95"
+                android:alpha="0" />
+            <KeyAttribute
+                motion:motionTarget="@+id/lottieView"
+                motion:framePosition="99"
+                android:alpha="1" />
+        </KeyFrameSet>
+        <OnSwipe motion:dragDirection="dragDown"
+            motion:maxVelocity="5000"
+            motion:moveWhenScrollAtTop="false"
+            motion:maxAcceleration="5000"
+            motion:dragScale="10"
+            motion:autoCompleteMode="continuousVelocity"
+            motion:onTouchUp="neverCompleteToEnd"
+            motion:touchAnchorSide="top" />
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:id="@+id/lottieView"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:elevation="1dp"
+            android:alpha="0"
+            motion:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@+id/nestedView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:elevation="2dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintTop_toTopOf="parent" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/lottieView"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:elevation="3dp"
+            android:alpha="1"
+            motion:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@+id/nestedView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="180dp"
+            android:elevation="2dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintTop_toTopOf="parent" />
+    </ConstraintSet>
+</MotionScene>
