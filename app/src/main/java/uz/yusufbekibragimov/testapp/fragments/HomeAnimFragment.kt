@@ -1,5 +1,6 @@
 package uz.yusufbekibragimov.testapp.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
@@ -7,21 +8,27 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
 import android.view.*
+import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.motion.widget.MotionLayout.TransitionListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import uz.yusufbekibragimov.testapp.R
+import uz.yusufbekibragimov.testapp.adapter.HomeAdapter
 import uz.yusufbekibragimov.testapp.databinding.HomeAnimFragmentBinding
 
 class HomeAnimFragment : Fragment() {
 
     private var _binding: HomeAnimFragmentBinding? = null
     private val binding get() = _binding!!
+
+    private val adapterMain by lazy { HomeAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,15 +46,24 @@ class HomeAnimFragment : Fragment() {
         }
     }
 
+
+    @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setViews() {
         binding.apply {
+
+            nestedView.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            nestedView.adapter = adapterMain
+            adapterMain.refresh()
+
             motionLayout.setTransitionListener(object : TransitionListener {
                 override fun onTransitionStarted(
                     motionLayout: MotionLayout?,
                     startId: Int,
                     endId: Int
                 ) {
+                    Log.d("TAGTTT", "onTransitionChange: START")
                 }
 
                 override fun onTransitionChange(
@@ -56,18 +72,19 @@ class HomeAnimFragment : Fragment() {
                     endId: Int,
                     progress: Float
                 ) {
+                    Log.d("TAGFFF", "onTransitionChange: 111111111 progress=$progress")
                 }
 
                 override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
-                    Log.d("TAGTAG", "onTransitionChange: progress23132=${motionLayout?.progress}")
+                    Log.d("TAGTTT", "onTransitionChange: progress23132=${motionLayout?.progress}")
                     lifecycleScope.launch(Dispatchers.Main) {
                         if (currentId == R.id.end) {
                             binding.lottieView.playAnimation()
                             vibrate(10, requireContext())
                             binding.nestedView.isEnabled = false
-                            delay(2000)
+                            delay(1000)
                             binding.nestedView.isEnabled = true
-                            motionLayout?.transitionToStart()
+                            motionLayout?.transitionToState(R.id.start,10)
                         }
                     }
                 }
@@ -78,7 +95,7 @@ class HomeAnimFragment : Fragment() {
                     positive: Boolean,
                     progress: Float
                 ) {
-                    Log.d("TAGTAG", "onTransitionChange: progress=$progress")
+                    Log.d("TAGTTT", "onTransitionChange: positive=$positive")
                 }
 
             })

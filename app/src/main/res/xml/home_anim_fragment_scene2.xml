@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:motion="http://schemas.android.com/apk/res-auto"
-    motion:defaultDuration="100">
+    motion:defaultDuration="50">
 
     <Transition
         motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@id/start"
-        motion:duration="100"
-        motion:layoutDuringTransition="ignoreRequest">
+        motion:duration="1">
         <KeyFrameSet>
             <KeyAttribute
                 android:alpha="0"
@@ -21,22 +20,15 @@
         <OnSwipe
             motion:autoCompleteMode="continuousVelocity"
             motion:dragDirection="dragDown"
-            motion:dragScale="10"
-            motion:maxAcceleration="5000"
-            motion:maxVelocity="5000"
-            motion:moveWhenScrollAtTop="false"
-            motion:onTouchUp="neverCompleteToEnd"
+            motion:maxAcceleration="10"
+            motion:maxVelocity="10"
+            motion:onTouchUp="stop"
+            motion:moveWhenScrollAtTop="true"
             motion:touchAnchorId="@+id/nestedView"
             motion:touchAnchorSide="top" />
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
-        <Constraint
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="88dp"
-            android:alpha="0"
-            motion:layout_constraintTop_toTopOf="parent" />
         <Constraint
             android:id="@+id/lottieView"
             android:layout_width="match_parent"
@@ -55,12 +47,6 @@
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
-        <Constraint
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="88dp"
-            android:alpha="0"
-            motion:layout_constraintTop_toTopOf="parent" />
         <Constraint
             android:id="@+id/lottieView"
             android:layout_width="match_parent"

@@ -5,32 +5,28 @@
     <Transition
         motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@id/start"
-        motion:duration="100">
+        motion:autoTransition="animateToStart"
+        motion:duration="150">
         <KeyFrameSet>
             <KeyAttribute
                 motion:motionTarget="@+id/lottieView"
-                motion:framePosition="95"
+                motion:framePosition="98"
                 android:alpha="0" />
             <KeyAttribute
                 motion:motionTarget="@+id/lottieView"
                 motion:framePosition="99"
                 android:alpha="1" />
         </KeyFrameSet>
-        <OnSwipe motion:dragDirection="dragDown"
-            motion:maxVelocity="5000"
-            motion:moveWhenScrollAtTop="false"
-            motion:maxAcceleration="5000"
-            motion:dragScale="10"
-            motion:autoCompleteMode="continuousVelocity"
-            motion:onTouchUp="neverCompleteToEnd"
-            motion:touchAnchorSide="top" />
+        <OnSwipe motion:dragDirection="dragUp"
+            motion:touchAnchorId="@id/nestedView"
+            motion:touchAnchorSide="top"/>
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
         <Constraint
             android:id="@+id/lottieView"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="1dp"
             android:elevation="1dp"
             android:alpha="0"
             motion:layout_constraintTop_toTopOf="parent" />
@@ -40,7 +36,7 @@
             android:layout_height="0dp"
             android:elevation="2dp"
             motion:layout_constraintBottom_toBottomOf="parent"
-            motion:layout_constraintTop_toTopOf="parent" />
+            motion:layout_constraintTop_toBottomOf="@id/lottieView" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
@@ -55,9 +51,8 @@
             android:id="@+id/nestedView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="180dp"
             android:elevation="2dp"
             motion:layout_constraintBottom_toBottomOf="parent"
-            motion:layout_constraintTop_toTopOf="parent" />
+            motion:layout_constraintTop_toBottomOf="@id/lottieView" />
     </ConstraintSet>
 </MotionScene>
