@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams
 import android.view.animation.DecelerateInterpolator
+import uz.yusufbekibragimov.testapp.R
 
 @SuppressLint("DrawAllocation")
 open class SimplePullToRefreshLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0)

@@ -3,7 +3,6 @@ package uz.yusufbekibragimov.testapp.lib
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.MainThreadDisposable
-import uz.yusufbekibragimov.testapp.lib.LottiePullToRefreshLayout
 
 class LottiePullToRefreshLayoutObservable(private val lottiePullToRefreshLayout: LottiePullToRefreshLayout) : Observable<LottiePullToRefreshes>() {
     override fun subscribeActual(observer: Observer<in LottiePullToRefreshes>) {

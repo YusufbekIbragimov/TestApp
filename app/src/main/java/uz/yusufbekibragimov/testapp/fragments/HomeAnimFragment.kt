@@ -6,22 +6,23 @@ import android.os.Build
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.util.Log
 import android.view.*
-import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
-import androidx.constraintlayout.motion.widget.MotionLayout
-import androidx.constraintlayout.motion.widget.MotionLayout.TransitionListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import io.reactivex.Observable
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import uz.yusufbekibragimov.testapp.R
 import uz.yusufbekibragimov.testapp.adapter.HomeAdapter
 import uz.yusufbekibragimov.testapp.databinding.HomeAnimFragmentBinding
+import uz.yusufbekibragimov.testapp.lib.LottiePullToRefreshes
+import uz.yusufbekibragimov.testapp.lib.refreshes
 
 class HomeAnimFragment : Fragment() {
 
@@ -35,7 +36,11 @@ class HomeAnimFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = HomeAnimFragmentBinding.inflate(layoutInflater)
+        _binding = HomeAnimFragmentBinding.inflate(
+            LayoutInflater.from(container?.context),
+            container,
+            false
+        )
         return binding.root
     }
 
@@ -47,17 +52,16 @@ class HomeAnimFragment : Fragment() {
     }
 
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint("ClickableViewAccessibility", "CheckResult")
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setViews() {
         binding.apply {
 
-            nestedView.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            nestedView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             nestedView.adapter = adapterMain
             adapterMain.refresh()
 
-            motionLayout.setTransitionListener(object : TransitionListener {
+            /*motionLayout.setTransitionListener(object : TransitionListener {
                 override fun onTransitionStarted(
                     motionLayout: MotionLayout?,
                     startId: Int,
@@ -98,7 +102,7 @@ class HomeAnimFragment : Fragment() {
                     Log.d("TAGTTT", "onTransitionChange: positive=$positive")
                 }
 
-            })
+            })*/
         }
     }
 

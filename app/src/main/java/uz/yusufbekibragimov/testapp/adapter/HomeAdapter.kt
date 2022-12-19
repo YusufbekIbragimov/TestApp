@@ -11,16 +11,16 @@ import uz.yusufbekibragimov.testapp.databinding.ItemDesignBinding
  * Project: Test App
  **/
 
-class HomeAdapter():RecyclerView.Adapter<HomeAdapter.RecViewHolder>() {
+class HomeAdapter : RecyclerView.Adapter<HomeAdapter.RecViewHolder>() {
 
-    inner class RecViewHolder(val itemDesignBinding: ItemDesignBinding) :RecyclerView.ViewHolder(itemDesignBinding.root){
-        fun bindData(){
-
+    inner class RecViewHolder(var itemDesignBinding: ItemDesignBinding) :
+        RecyclerView.ViewHolder(itemDesignBinding.root) {
+        fun bindData() {
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecViewHolder {
-        val binding = ItemDesignBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding = ItemDesignBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return RecViewHolder(binding)
     }
 
@@ -29,7 +29,7 @@ class HomeAdapter():RecyclerView.Adapter<HomeAdapter.RecViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return 3
+        return 30
     }
 
     fun refresh() {
