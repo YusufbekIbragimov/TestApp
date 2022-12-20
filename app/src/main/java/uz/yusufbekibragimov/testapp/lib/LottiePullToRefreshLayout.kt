@@ -1,6 +1,7 @@
 package uz.yusufbekibragimov.testapp.lib
 
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
@@ -8,8 +9,11 @@ import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import uz.yusufbekibragimov.testapp.R
 
-class LottiePullToRefreshLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0)
-    : SimplePullToRefreshLayout(context, attrs, defStyle) {
+class LottiePullToRefreshLayout @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
+) : SimplePullToRefreshLayout(context, attrs, defStyle) {
 
     private var animationFile: Int = -1
     private val lottieAnimationView by lazy {
@@ -20,15 +24,25 @@ class LottiePullToRefreshLayout @JvmOverloads constructor(context: Context, attr
 
             setAnimation(animationFile)
             repeatCount = LottieDrawable.INFINITE
-            layoutParams = LayoutParams(ViewGroup.LayoutParams(MATCH_PARENT, triggerOffSetTop)).apply { type =
-                ViewType.TOP_VIEW
-            }
+            layoutParams =
+                LayoutParams(ViewGroup.LayoutParams(MATCH_PARENT, triggerOffSetTop)).apply {
+                    type =
+                        ViewType.TOP_VIEW
+                }
         }
     }
 
     init {
-        context.theme.obtainStyledAttributes(attrs, R.styleable.LottiePullToRefreshLayout, defStyle, 0).let { style ->
-            animationFile = style.getResourceId(R.styleable.LottiePullToRefreshLayout_pull_to_refresh_lottieFile, -1)
+        context.theme.obtainStyledAttributes(
+            attrs,
+            R.styleable.LottiePullToRefreshLayout,
+            defStyle,
+            0
+        ).let { style ->
+            animationFile = style.getResourceId(
+                R.styleable.LottiePullToRefreshLayout_pull_to_refresh_lottieFile,
+                -1
+            )
             addView(lottieAnimationView)
             style.recycle()
         }

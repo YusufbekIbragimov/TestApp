@@ -29,7 +29,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.RecViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return 30
+        return 1
     }
 
     fun refresh() {

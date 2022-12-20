@@ -5,9 +5,12 @@
     android:id="@+id/collapseToolBar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:max_offset_top="250dp"
+    app:max_offset_top="300dp"
+    android:scrollbarFadeDuration="1000"
+    android:paddingTop="48dp"
+    android:background="@drawable/bg_gradient_full"
     app:pull_to_refresh_lottieFile="@raw/main_screen_anim"
-    app:trigger_offset_top="125dp">
+    app:trigger_offset_top="150dp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/nestedView"

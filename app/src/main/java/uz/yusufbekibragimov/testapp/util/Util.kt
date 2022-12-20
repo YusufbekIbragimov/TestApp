@@ -4,11 +4,11 @@ import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
-import android.widget.LinearLayout
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.widget.NestedScrollView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+
 
 /**
  * Created by Ibragimov Yusufbek
@@ -31,7 +31,11 @@ class SwipeRefreshMotionLayout : MotionLayout {
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    )
 
     override fun onNestedPreScroll(target: View, dx: Int, dy: Int, consumed: IntArray, type: Int) {
 
@@ -47,7 +51,7 @@ class SwipeRefreshMotionLayout : MotionLayout {
             Log.d("TAGTAG", "onNestedPreScroll: ishladi2")
         } else {
             Log.d("TAGTAG", "onNestedPreScroll: ishladi3")
-            return super.onNestedPreScroll(target, dx, dy/4, consumed, type)
+            return super.onNestedPreScroll(target, dx, dy / 4, consumed, type)
         }
 
         val recyclerView = target.getChildAt(0)
@@ -59,5 +63,12 @@ class SwipeRefreshMotionLayout : MotionLayout {
         }
 
         //super.onNestedPreScroll(target, dx, dy/4, consumed, type)
+    }
+}
+
+
+class CustomLayoutManager(context: Context,var isScroll:Boolean) : LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false) {
+    override fun canScrollVertically(): Boolean {
+        return isScroll
     }
 }

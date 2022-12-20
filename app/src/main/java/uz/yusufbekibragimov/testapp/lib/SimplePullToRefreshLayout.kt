@@ -13,15 +13,18 @@ import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams
 import android.view.animation.DecelerateInterpolator
 import uz.yusufbekibragimov.testapp.R
+import kotlin.math.abs
 
 @SuppressLint("DrawAllocation")
-open class SimplePullToRefreshLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0)
-    : ViewGroup(context, attrs, defStyle), RefreshView {
+open class SimplePullToRefreshLayout @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
+) : ViewGroup(context, attrs, defStyle), RefreshView {
 
     var triggerOffSetTop = 0
         private set
-    var maxOffSetTop = 0
-        private set
+    private var maxOffSetTop = 0
 
     private var downX = 0F
     private var downY = 0F
@@ -41,11 +44,26 @@ open class SimplePullToRefreshLayout @JvmOverloads constructor(context: Context,
     }
 
     init {
-        context.theme.obtainStyledAttributes(attrs, R.styleable.SimplePullToRefreshLayout, defStyle, 0).let {
-            val defaultValue = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, -1f, context.resources.displayMetrics).toInt()
+        context.theme.obtainStyledAttributes(
+            attrs,
+            R.styleable.SimplePullToRefreshLayout,
+            defStyle,
+            0
+        ).let {
+            val defaultValue = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                -1f,
+                context.resources.displayMetrics
+            ).toInt()
 
-            triggerOffSetTop = it.getDimensionPixelOffset(R.styleable.SimplePullToRefreshLayout_trigger_offset_top, defaultValue)
-            maxOffSetTop = it.getDimensionPixelOffset(R.styleable.SimplePullToRefreshLayout_max_offset_top, defaultValue)
+            triggerOffSetTop = it.getDimensionPixelOffset(
+                R.styleable.SimplePullToRefreshLayout_trigger_offset_top,
+                defaultValue
+            )
+            maxOffSetTop = it.getDimensionPixelOffset(
+                R.styleable.SimplePullToRefreshLayout_max_offset_top,
+                defaultValue
+            )
             it.recycle()
         }
     }
@@ -80,7 +98,8 @@ open class SimplePullToRefreshLayout @JvmOverloads constructor(context: Context,
         fun setInitialValues() {
             val topView = topChildView.view
             val layoutParams = topView.layoutParams as LayoutParams
-            val topViewHeight = topView.measuredHeight + layoutParams.topMargin + layoutParams.bottomMargin
+            val topViewHeight =
+                topView.measuredHeight + layoutParams.topMargin + layoutParams.bottomMargin
             topChildView = topChildView.copy(positionAttr = PositionAttr(height = topViewHeight))
 
             triggerOffSetTop = if (triggerOffSetTop < 0) topViewHeight / 2 else triggerOffSetTop
@@ -104,7 +123,14 @@ open class SimplePullToRefreshLayout @JvmOverloads constructor(context: Context,
             val right: Int = left + topView.measuredWidth
             val bottom = 0
 
-            topChildView = topChildView.copy(positionAttr = PositionAttr(left = left, top = top, right = right, bottom = bottom))
+            topChildView = topChildView.copy(
+                positionAttr = PositionAttr(
+                    left = left,
+                    top = top,
+                    right = right,
+                    bottom = bottom
+                )
+            )
             topView.layout(left, top, right, bottom)
         }
 
@@ -117,7 +143,14 @@ open class SimplePullToRefreshLayout @JvmOverloads constructor(context: Context,
             val right: Int = left + contentView.measuredWidth
             val bottom: Int = top + contentView.measuredHeight
 
-            contentChildView = contentChildView.copy(positionAttr = PositionAttr(left = left, top = top, right = right, bottom = bottom))
+            contentChildView = contentChildView.copy(
+                positionAttr = PositionAttr(
+                    left = left,
+                    top = top,
+                    right = right,
+                    bottom = bottom
+                )
+            )
             contentView.layout(left, top, right, bottom)
         }
 
@@ -127,11 +160,11 @@ open class SimplePullToRefreshLayout @JvmOverloads constructor(context: Context,
 
     override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
         fun checkIfScrolledFurther(ev: MotionEvent, dy: Float, dx: Float) =
-                if (!contentChildView.view.canScrollVertically(-1)) {
-                    ev.y > downY && Math.abs(dy) > Math.abs(dx)
-                } else {
-                    false
-                }
+            if (!contentChildView.view.canScrollVertically(-1)) {
+                ev.y > downY && abs(dy) > abs(dx)
+            } else {
+                false
+            }
 
         var shouldStealTouchEvents = false
 
@@ -141,19 +174,24 @@ open class SimplePullToRefreshLayout @JvmOverloads constructor(context: Context,
 
         when (ev.action) {
             MotionEvent.ACTION_DOWN -> {
-                downX = ev.x
-                downY = ev.y
+                if (currentState != State.TRIGGERING) {
+                    downX = ev.x
+                    downY = ev.y
+                }
             }
             MotionEvent.ACTION_MOVE -> {
-                val dx = ev.x - downX
-                val dy = ev.y - downY
-                shouldStealTouchEvents = checkIfScrolledFurther(ev, dy, dx)
+                if (currentState != State.TRIGGERING) {
+                    val dx = ev.x - downX
+                    val dy = ev.y - downY
+                    shouldStealTouchEvents = checkIfScrolledFurther(ev, dy, dx)
+                }
             }
         }
 
         return shouldStealTouchEvents
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         var handledTouchEvent = true
 
@@ -164,8 +202,10 @@ open class SimplePullToRefreshLayout @JvmOverloads constructor(context: Context,
         parent.requestDisallowInterceptTouchEvent(true)
         when (event.action) {
             MotionEvent.ACTION_MOVE -> {
-                offsetY = (event.y - downY) * (1 - STICKY_FACTOR * STICKY_MULTIPLIER)
-                move()
+                if (currentState != State.TRIGGERING) {
+                    offsetY = (event.y - downY) * (1 - STICKY_FACTOR * STICKY_MULTIPLIER)
+                    move()
+                }
             }
             MotionEvent.ACTION_CANCEL,
             MotionEvent.ACTION_UP -> {
@@ -196,8 +236,10 @@ open class SimplePullToRefreshLayout @JvmOverloads constructor(context: Context,
             duration = ROLL_BACK_DURATION
             interpolator = DecelerateInterpolator()
             addUpdateListener {
-                topChildView.view.y = topChildView.positionAttr.top + triggerOffset + rollBackOffset * animatedValue as Float
-                contentChildView.view.y = contentChildView.positionAttr.top + triggerOffset + rollBackOffset * animatedValue as Float
+                topChildView.view.y =
+                    topChildView.positionAttr.top + triggerOffset + rollBackOffset * animatedValue as Float
+                contentChildView.view.y =
+                    contentChildView.positionAttr.top + triggerOffset + rollBackOffset * animatedValue as Float
             }
             addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator?) {
@@ -215,6 +257,10 @@ open class SimplePullToRefreshLayout @JvmOverloads constructor(context: Context,
         }
     }
 
+    fun setState(state: State) {
+        this.currentState = state
+    }
+
     //<editor-fold desc="Helpers">
     fun onProgressListener(onProgressListener: (Float) -> Unit) {
         onProgressListeners.add(onProgressListener)
@@ -230,29 +276,30 @@ open class SimplePullToRefreshLayout @JvmOverloads constructor(context: Context,
 
     override fun checkLayoutParams(p: ViewGroup.LayoutParams?) = null != p && p is LayoutParams
 
-    override fun generateDefaultLayoutParams() = LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+    override fun generateDefaultLayoutParams() =
+        LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
     override fun generateLayoutParams(attrs: AttributeSet?) = LayoutParams(context, attrs)
 
     override fun generateLayoutParams(p: ViewGroup.LayoutParams?) = LayoutParams(p)
 
-    class LayoutParams : ViewGroup.MarginLayoutParams {
+    class LayoutParams : MarginLayoutParams {
         var type: ViewType = ViewType.UNKNOWN
 
         constructor(c: Context, attrs: AttributeSet?) : super(c, attrs) {
-            c.theme.obtainStyledAttributes(attrs, R.styleable.EasyPullLayout_LayoutParams, 0, 0).let {
-                type = ViewType.fromValue(
-                    it.getInt(
-                        R.styleable.EasyPullLayout_LayoutParams_layout_type,
-                        ViewType.UNKNOWN.value
+            c.theme.obtainStyledAttributes(attrs, R.styleable.EasyPullLayout_LayoutParams, 0, 0)
+                .let {
+                    type = ViewType.fromValue(
+                        it.getInt(
+                            R.styleable.EasyPullLayout_LayoutParams_layout_type,
+                            ViewType.UNKNOWN.value
+                        )
                     )
-                )
-                it.recycle()
-            }
+                    it.recycle()
+                }
         }
 
         constructor(width: Int, height: Int) : super(width, height)
-        constructor(source: MarginLayoutParams) : super(source)
         constructor(source: ViewGroup.LayoutParams) : super(source)
     }
 
@@ -273,6 +320,12 @@ open class SimplePullToRefreshLayout @JvmOverloads constructor(context: Context,
     }
 
     data class ChildView(val view: View, val positionAttr: PositionAttr = PositionAttr())
-    data class PositionAttr(val left: Int = 0, val top: Int = 0, val right: Int = 0, val bottom: Int = 0, val height: Int = 0)
+    data class PositionAttr(
+        val left: Int = 0,
+        val top: Int = 0,
+        val right: Int = 0,
+        val bottom: Int = 0,
+        val height: Int = 0
+    )
     //</editor-fold>
 }

@@ -4,15 +4,12 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
+    <ImageView
         android:id="@+id/text"
         android:layout_width="match_parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:scaleType="centerCrop"
-        android:text="SAdsagkldjsalk"
-        android:textSize="24sp"
-        android:textColor="@color/black"
-        android:layout_marginHorizontal="8dp"
+        android:scaleType="fitStart"
+        android:src="@drawable/img"
         android:layout_height="wrap_content"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

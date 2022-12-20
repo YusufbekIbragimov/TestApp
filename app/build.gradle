@@ -58,6 +58,23 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:2.2.21"
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
 
+    // Biometric
+    implementation "androidx.biometric:biometric-ktx:1.2.0-alpha04"
+
+    // jmrtd
+    implementation 'org.jmrtd:jmrtd:0.7.18'
+    implementation 'net.sf.scuba:scuba-sc-android:0.0.20'
+    implementation 'com.madgag.spongycastle:prov:1.58.0.0'
+    implementation 'edu.ucar:jj2000:5.2'
+    implementation 'com.github.mhshams:jnbis:1.1.0'
+
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+
+    // MLKIT
+    implementation 'com.google.android.gms:play-services-mlkit-text-recognition:16.2.0'
+
 
 
 }
